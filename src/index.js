@@ -12,7 +12,7 @@ ReactDOM.render(
 );
 
 /*
-React 18:
+React 18 (https://github.com/boardgameio/boardgame.io/issues/1073)
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

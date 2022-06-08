@@ -1,26 +1,60 @@
 import { INVALID_MOVE } from "boardgame.io/core";
 
-function IsVictory(cells) {
-  const positions = [
-    [0, 1, 2], [3, 4, 5], [6, 7, 8],
-    [0, 3, 6], [1, 4, 7], [2, 5, 8],
-    [0, 4, 8], [2, 4, 6],
-  ];
+function IsVictory(G) {
+  const positions = [];
+
+  for (let i = 0; i < G.n; ++i) {
+    const pos = [];
+    for (let j = 0; j < G.n; ++j) {
+      pos.push((i, j));
+    }
+    positions.push(pos);
+  }
+
+  for (let j = 0; j < G.n; ++j) {
+    const pos = [];
+    for (let i = 0; i < G.n; ++i) {
+      pos.push((i, j));
+    }
+    positions.push(pos);
+  }
+
+  {
+    const pos = [];
+    for (let i = 0; i < G.n; ++i) {
+      pos.push((i, i));
+    }
+    positions.push(pos);
+  }
+
+  {
+    const pos = [];
+    for (let i = 0; i < G.n; ++i) {
+      pos.push((i, G.n - i - 1));
+    }
+    positions.push(pos);
+  }
 
   const isRowComplete = row => {
-    const symbols = row.map(i => cells[i]);
-    return symbols[0] !== null && symbols.every(i => i === symbols[0]);
+    const symbols = row.map((i, j) => G.cells[i][j]);
+    return symbols[0] !== null && symbols.every(s => s === symbols[0]);
   };
 
   return positions.some(isRowComplete);
 }
 
-function IsDraw(cells) {
-  return cells.every(c => c !== null);
+function IsDraw(G) {
+  return G.cells.every(row => row.every(c => c !== null));
 }
 
 export const TicTacToe = {
-  setup: () => ({ cells: Array(9).fill(null) }),
+  setup: () => {
+    const N = 5;
+    return {
+      n: N,
+      cells: Array(N).fill(Array(N).fill(null)),
+    };
+  },
 
   turn: {
     minMoves: 1,
@@ -28,19 +62,19 @@ export const TicTacToe = {
   },
 
   moves: {
-    clickCell: (G, ctx, id) => {
-      if (G.cells[id] != null) {
+    clickCell: (G, ctx, i, j) => {
+      if (G.cells[i][j] != null) {
         return INVALID_MOVE;
       }
-      G.cells[id] = ctx.currentPlayer;
+      G.cells[i][j] = ctx.currentPlayer;
     },
   },
 
   endIf: (G, ctx) => {
-    if (IsVictory(G.cells)) {
+    if (IsVictory(G)) {
       return { winner: ctx.currentPlayer };
     }
-    if (IsDraw(G.cells)) {
+    if (IsDraw(G)) {
       return { draw: true };
     }
   },

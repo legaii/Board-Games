@@ -18,16 +18,14 @@ export const TicTacToeBoard = ({ ctx, G, moves }) => {
     textAlign: "center",
   };
 
-  const n = 3;
   let tbody = [];
-  for (let i = 0; i < n; ++i) {
+  for (let i = 0; i < G.n; ++i) {
     let tr = [];
-    for (let j = 0; j < n; ++j) {
-      const id = i * n + j;
-      tr.push(<td key={id}> {
-        G.cells[id] ?
-        <div style={cellStyle}>{G.cells[id]}</div> :
-        <button style={cellStyle} onClick={() => moves.clickCell(id)} />
+    for (let j = 0; j < G.n; ++j) {
+      tr.push(<td key={i * G.n + j}> {
+        G.cells[i][j] ?
+        <div style={cellStyle}>{G.cells[i][j]}</div> :
+        <button style={cellStyle} onClick={() => moves.clickCell(i, j)} />
       } </td>);
     }
     tbody.push(<tr key={i}>{tr}</tr>);
