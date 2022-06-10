@@ -6,7 +6,7 @@ function IsVictory(G) {
   for (let i = 0; i < G.n; ++i) {
     const pos = [];
     for (let j = 0; j < G.n; ++j) {
-      pos.push((i, j));
+      pos.push([i, j]);
     }
     positions.push(pos);
   }
@@ -14,7 +14,7 @@ function IsVictory(G) {
   for (let j = 0; j < G.n; ++j) {
     const pos = [];
     for (let i = 0; i < G.n; ++i) {
-      pos.push((i, j));
+      pos.push([i, j]);
     }
     positions.push(pos);
   }
@@ -22,7 +22,7 @@ function IsVictory(G) {
   {
     const pos = [];
     for (let i = 0; i < G.n; ++i) {
-      pos.push((i, i));
+      pos.push([i, i]);
     }
     positions.push(pos);
   }
@@ -30,13 +30,15 @@ function IsVictory(G) {
   {
     const pos = [];
     for (let i = 0; i < G.n; ++i) {
-      pos.push((i, G.n - i - 1));
+      pos.push([i, G.n - i - 1]);
     }
     positions.push(pos);
   }
+
+  console.log(positions);
 
   const isRowComplete = row => {
-    const symbols = row.map((i, j) => G.cells[i][j]);
+    const symbols = row.map(([i, j]) => G.cells[i][j]);
     return symbols[0] !== null && symbols.every(s => s === symbols[0]);
   };
 
@@ -47,7 +49,7 @@ function IsDraw(G) {
   return G.cells.every(row => row.every(c => c !== null));
 }
 
-export const TicTacToe = {
+export const Game = {
   setup: () => {
     const N = 5;
     return {

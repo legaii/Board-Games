@@ -1,6 +1,6 @@
 import React from "react";
 
-export const TicTacToeBoard = ({ ctx, G, moves }) => {
+export const Board = ({ ctx, G, moves }) => {
   let winner = "";
   if (ctx.gameover) {
     winner = <div id="winner"> {
