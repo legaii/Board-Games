@@ -35,8 +35,6 @@ function IsVictory(G) {
     positions.push(pos);
   }
 
-  console.log(positions);
-
   const isRowComplete = row => {
     const symbols = row.map(([i, j]) => G.cells[i][j]);
     return symbols[0] !== null && symbols.every(s => s === symbols[0]);
