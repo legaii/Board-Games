@@ -51,16 +51,22 @@ const pawn = (mode, owner, i) => {
     moves.push(Move(-1, -1, "pawn"));
   }
 
+  const queenify = moves.forEach.bind(moves, (_, index) => {
+    moves[index].figure = "queen";
+  });
+
   if (owner === "black") {
     moves.forEach((_, index) => {
       moves[index].i *= -1;
     });
-  }
 
-  if (i === 0 || i === N - 1) {
-    moves.forEach((_, index) => {
-      moves[index].figure = "queen";
-    });
+    if (i == N - 2) {
+      queenify();
+    }
+  } else {
+    if (i == 1) {
+      queenify();
+    }
   }
 
   return moves;
