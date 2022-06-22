@@ -17,8 +17,8 @@ for (let i = 0; i < 2; ++i) {
 }
 
 for (let j = 0; j < N; ++j) {
-  start[1][j].figure = "pawn";
-  start[N - 2][j].figure = "pawn";
+  start[1][j].figure = "babyPawn";
+  start[N - 2][j].figure = "babyPawn";
 }
 
 start[0][0].figure = "rook";
@@ -60,13 +60,23 @@ const pawn = (mode, owner, i) => {
       moves[index].i *= -1;
     });
 
-    if (i == N - 2) {
+    if (i === N - 2) {
       queenify();
     }
   } else {
-    if (i == 1) {
+    if (i === 1) {
       queenify();
     }
+  }
+
+  return moves;
+};
+
+const babyPawn = (mode, owner, i) => {
+  const moves = pawn(mode, owner, i);
+
+  if (mode === "NORMAL") {
+    moves.push(Move(owner === "white" ? -2 : 2, 0, "pawn"));
   }
 
   return moves;
@@ -159,6 +169,6 @@ const king = () => [
   Move(-1, -1, "king"),
 ];
 
-const rules = { pawn, knight, bishop, rook, queen, king, };
+const rules = { pawn, babyPawn, knight, bishop, rook, queen, king, };
 
 export { N, start, rules, };
