@@ -1,23 +1,37 @@
 import React from "react";
 
 export const Cell = (props) => {
-  const style = {
+  const divStyle = {
     width: "50px",
     height: "50px",
-    lineHeight: "50px",
-    textAlign: "center",
+    display: "flex",
+    alignItems: "center",
     background: props.color,
-    border:
-      props.selected ?
-      "3px solid yellow" :
-      "1px solid #555",
+  };
+
+  const figureStyle = {
+    fontSize: "250%",
+    margin: "auto",
+    color:
+      props.owner === "white" ?
+      "#e94" : "black",
+  };
+
+  // https://en.wikipedia.org/wiki/Chess_symbols_in_Unicode
+  const icons = {
+    pawn:     "\u265F",
+    babyPawn: "\u265F",
+    knight:   "\u265E",
+    bishop:   "\u265D",
+    rook:     "\u265C",
+    queen:    "\u265B",
+    king:     "\u265A",
   };
 
   return (
-    <button style={style} onClick={props.onClick}>
+    <div style={divStyle} onClick={props.onClick}>
       { props.owner &&
-        <p style={{background: props.owner === "white" ?
-          "red" : "blue"}}>{props.figure}</p> }
-    </button>
+        <span style={figureStyle}>{icons[props.figure]}</span> }
+    </div>
   );
 }

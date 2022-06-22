@@ -3,7 +3,7 @@ import { Cell } from "./Cell";
 
 export const Board = ({ G, ctx, moves }) => {
   const color = (i, j) =>
-    (i + j) % 2 === 0 ? "brown" : "#ddd";
+    (i + j) % 2 === 0 ? "#5a4" : "#ddd";
 
   const [selected, setSelected] = useState(null);
 
